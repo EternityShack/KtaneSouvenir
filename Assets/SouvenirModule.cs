@@ -93,6 +93,7 @@ public class SouvenirModule : MonoBehaviour
     const string _SeaShells = "SeaShells";
     const string _SillySlots = "SillySlots";
     const string _SimonScreams = "SimonScreamsModule";
+    const string _SimonSends = "SimonSendsModule";
     const string _SimonStates = "SimonV2";
     const string _SkewedSlots = "SkewedSlotsModule";
     const string _SonicTheHedgehog = "sonic";
@@ -146,6 +147,7 @@ public class SouvenirModule : MonoBehaviour
             { _SeaShells, ProcessSeaShells },
             { _SillySlots, ProcessSillySlots },
             { _SimonScreams, ProcessSimonScreams },
+            { _SimonSends, ProcessSimonSends };
             { _SimonStates, ProcessSimonStates },
             { _SkewedSlots, ProcessSkewedSlots },
             { _SonicTheHedgehog, ProcessSonicTheHedgehog },
@@ -2318,6 +2320,29 @@ public class SouvenirModule : MonoBehaviour
         }
 
         addQuestions(qs);
+    }
+    
+    private IEnumerable<object> ProcessSimonSends(KMBombModule module)
+    {
+        var comp = GetComponent(module, "SimonSendsModule");
+        var fldAnswers = GetField<List<int>>(comp, "_answerSoFar");
+        var recievedR = GetField<char>(comp, "r");
+        var recievedG = GetField<char>(comp, "g");
+        var recievedB = GetField<char>(comp, "b");
+        
+        if (comp == null || recievedR == null || recievedG == null || recievedB == null)
+            yield break;
+            
+        yield return null;
+        
+        List<int> accAnswers = fldAnswers.Get();
+        string[] recievedLetters = new string[] { recievedR.Get().ToString(), recievedG.Get().ToString(), recievedB.Get().ToString() };
+        
+        while (accAnswers != null)
+            yield return new WaitForSeconds(.1f);
+            
+        _modulesSolved.IncSafe(_SimonSends);
+        addQuestions(Enumerable.Range(0, 3).Select(i => makeQuestion(Question.SimonSendsDisplayedLetters, _SimonSends, new[] { recievedLetters[i] }, new[] { ordinal(i + 1) }, recievedLetters)));
     }
 
     private IEnumerable<object> ProcessSimonStates(KMBombModule module)
