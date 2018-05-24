@@ -147,7 +147,7 @@ public class SouvenirModule : MonoBehaviour
             { _SeaShells, ProcessSeaShells },
             { _SillySlots, ProcessSillySlots },
             { _SimonScreams, ProcessSimonScreams },
-            { _SimonSends, ProcessSimonSends };
+            { _SimonSends, ProcessSimonSends },
             { _SimonStates, ProcessSimonStates },
             { _SkewedSlots, ProcessSkewedSlots },
             { _SonicTheHedgehog, ProcessSonicTheHedgehog },
